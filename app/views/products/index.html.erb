@@ -20,12 +20,12 @@
         <td><%= product.description %></td>
         <td><%= product.price %></td>
         <td><%= product.quantity %></td>
-        <td><%= product.category_id %></td>
-        <td><%= product.user_id %></td>
+        <td><%= product.category.name %></td>
+        <td><%= product.user.user_name %></td>
         <td><%= link_to 'Show', product %></td>
         <td><%= link_to 'Edit', edit_product_path(product) %></td>
         <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <td><%= button_to "Add #{product.product_name} to cart", line_items_path(:product_id => product.id) %></td>
+        <td><%= link_to "Add to cart", line_items_path(:product_id => product.id), method: :post %></td>
       </tr>
     <% end %>
   </tbody>

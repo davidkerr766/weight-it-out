@@ -12,7 +12,9 @@
   <thead>
     <tr>
       <th>Product</th>
+      <th>Price</th>
       <th>Quantity</th>
+      <th>Total</th>
     </tr>
   </thead>
 
@@ -20,12 +22,20 @@
     <% @order.line_items.each do |item| %>
       <tr>
         <td><%= item.product.product_name %></td>
+        <td><%= number_to_currency(item.product.price) %></td>
         <td><%= item.quantity %></td>
+        <td><%= number_to_currency(item.total) %></td>
         <td><%= link_to "+1", line_item_add_path(item), method: :post %></td>
         <td><%= link_to "-1", line_item_subtract_path(item), method: :post %></td>
-        <td><%= link_to "Delete", line_item_path(item), method: :delete %></td>
+        <td><%= link_to "Delete", line_item_path(item), method: :delete, data: {confirm: "Are you sure?"} %></td>
       </tr>
     <% end %>
+      <tr>
+      <td><strong>Total Purchace</strong></td>
+      <td></td>
+      <td></td>
+      <td><strong><%= number_to_currency(@order.order_total) %></strong></td>
+      </tr>
   </tbody>
 </table>
 
