@@ -12,7 +12,7 @@
 
 <p>
   <strong>Price:</strong>
-  <%= @product.price %>
+  <%= number_to_currency @product.price %>
 </p>
 
 <p>
@@ -22,12 +22,12 @@
 
 <p>
   <strong>Category:</strong>
-  <%= @product.category_id %>
+  <%= @product.category.name %>
 </p>
 
 <p>
   <strong>User:</strong>
-  <%= @product.user_id %>
+  <%= @product.user.user_name %>
 </p>
 
 <%= link_to 'Edit', edit_product_path(@product) %> |
