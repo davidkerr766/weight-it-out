@@ -13,7 +13,6 @@
     <tr>
       <th>Product</th>
       <th>Quantity</th>
-      <th colspan="3"></th>
     </tr>
   </thead>
 
@@ -22,6 +21,9 @@
       <tr>
         <td><%= item.product.product_name %></td>
         <td><%= item.quantity %></td>
+        <td><%= link_to "+1", line_item_add_path(item), method: :post %></td>
+        <td><%= link_to "-1", line_item_subtract_path(item), method: :post %></td>
+        <td><%= link_to "Delete", line_item_path(item), method: :delete %></td>
       </tr>
     <% end %>
   </tbody>

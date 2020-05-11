@@ -17,10 +17,32 @@ class LineItemsController < ApplicationController
         @line_item.save
         redirect_to order_path(@current_order)
       end
+
+      def add
+        @line_item = LineItem.find(params[:id])
+        @line_item.quantity += 1
+        @line_item.save
+        redirect_to order_path(@current_order)
+      end
+
+      def subtract
+        @line_item = LineItem.find(params[:id])
+        if @line_item.quantity > 1
+          @line_item.quantity -= 1
+        end
+        @line_item.save
+        redirect_to order_path(@current_order)
+      end
+
+      def destroy
+        @line_item = LineItem.find(params[:id])
+        @line_item.destroy
+        redirect_to order_path(@current_order)
+      end
       
       private
         def line_item_params
-          params.require(:line_item).permit(:quantity,:product_id, :cart_id)
+          params.require(:line_item).permit(:quantity,:product_id)
         end
 
         def current_order
