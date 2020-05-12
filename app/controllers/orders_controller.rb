@@ -8,6 +8,7 @@ class OrdersController < ApplicationController
         cart = current_user.orders.last
         cart.paid = true
         cart.save
+        flash[:notice] = "Payment Successful"
       end
       session.delete(:key)
     end
