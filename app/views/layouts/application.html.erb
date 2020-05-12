@@ -12,7 +12,10 @@
   <body>
     <nav>
       <%= link_to "Products", root_path %>
-      <% if current_user %>
+      <% if user_signed_in? %>
+        <% if current_user.orders.last != nil %>
+          <%= link_to "My Cart", order_path(current_user.orders.last) if current_user.orders.last.paid == false %>
+        <% end %>
         Welcome: <%= current_user.user_name %>
         <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
       <% else%>
