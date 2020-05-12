@@ -20,8 +20,12 @@ class LineItemsController < ApplicationController
 
       def add
         @line_item = LineItem.find(params[:id])
-        @line_item.quantity += 1
-        @line_item.save
+        if @line_item.product.quantity > @line_item.quantity
+          @line_item.quantity += 1
+          @line_item.save
+        else
+          flash[:notice] = "There are only #{@line_item.quantity} available for hire."
+        end
         redirect_to order_path(@current_order)
       end
 
@@ -29,8 +33,10 @@ class LineItemsController < ApplicationController
         @line_item = LineItem.find(params[:id])
         if @line_item.quantity > 1
           @line_item.quantity -= 1
+          @line_item.save
+        else
+          flash[:notice] = "Minimun of 1 item.  Selection can be removed from cart."
         end
-        @line_item.save
         redirect_to order_path(@current_order)
       end
 
