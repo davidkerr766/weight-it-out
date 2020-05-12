@@ -43,6 +43,10 @@ class OrdersController < ApplicationController
     redirect_to orders_url, notice: 'Order was successfully destroyed.'
   end
 
+  def purchase
+    render plain: params
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order
