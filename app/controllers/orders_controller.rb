@@ -70,7 +70,6 @@ class OrdersController < ApplicationController
       success_url: orders_url(:key => "#{key}"),
       cancel_url: order_url(@order),
     )
-    puts @session.inspect
   end
 
   private
