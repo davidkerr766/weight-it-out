@@ -8,6 +8,11 @@ class OrdersController < ApplicationController
         cart = current_user.orders.last
         cart.paid = true
         cart.save
+        cart.line_items.each { |line|
+          product = line.product
+          product.quantity -= line.quantity
+          product.save 
+        }
         flash[:notice] = "Payment Successful"
       end
       session.delete(:key)
