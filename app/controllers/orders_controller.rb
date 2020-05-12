@@ -1,8 +1,17 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_order, only: [:show, :edit, :update, :destroy, :purchase]
 
   def index
     @orders = Order.all
+    if params[:key].present?
+      if params[:key] == session[:key]
+        cart = current_user.orders.last
+        cart.paid = true
+        cart.save
+        flash[:notice] = "Payment Successful"
+      end
+      session.delete(:key)
+    end
   end
 
   def show
@@ -41,6 +50,26 @@ class OrdersController < ApplicationController
   def destroy
     @order.destroy
     redirect_to orders_url, notice: 'Order was successfully destroyed.'
+  end
+
+  def purchase
+    key = ('a'..'z').to_a.shuffle[0..7].join
+    session[:key] = key
+    Stripe.api_key = "sk_test_kqxu11Y98Ngk3DYmWaDBZuvS000rTRt5dQ"
+    @session = Stripe::Checkout::Session.create(
+      payment_method_types: ['card'],
+      line_items: @order.line_items.map { |item|
+        {
+          name: item.product.product_name,
+          description: item.product.description,
+          amount: item.product.price.to_i * 100,
+          currency: 'aud',
+          quantity: item.quantity
+        }
+      },
+      success_url: orders_url(:key => "#{key}"),
+      cancel_url: order_url(@order),
+    )
   end
 
   private

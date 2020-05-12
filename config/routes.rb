@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :orders
+  get "orders/:id/purchase" => "orders#purchase", as: "purchase_order"
   root "products#index"
   resources :products
   devise_for :users
