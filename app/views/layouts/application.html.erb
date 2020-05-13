@@ -17,6 +17,7 @@
           <%= link_to "My Cart", order_path(current_user.orders.last) if current_user.orders.last.paid == false %>
         <% end %>
         Welcome: <%= current_user.user_name %>
+        <%= link_to "My products", products_path(:show => "my_products") if current_user.has_role? :seller %>
         <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
       <% else%>
         <%= link_to "Sign in", new_user_session_path %>
