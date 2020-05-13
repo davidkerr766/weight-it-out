@@ -1,5 +1,6 @@
 class LineItemsController < ApplicationController
-    before_action :current_order
+  before_action :authenticate_user!
+  before_action :current_order
 
     def create
         chosen_product = Product.find(params[:product_id])

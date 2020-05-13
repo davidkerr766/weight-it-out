@@ -1,9 +1,18 @@
 class ProductsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   before_action :set_categories, only: [:new, :edit]
 
   def index
-    @products = Product.all
+    if params[:show].present?
+      puts "It worked"
+      case params[:show]
+      when "my_products"
+        @products = Product.where(user_id: current_user.id)
+      end
+    else
+      @products = Product.all
+    end
   end
 
   def show
@@ -21,6 +30,8 @@ class ProductsController < ApplicationController
     @product.user_id = current_user.id
 
     if @product.save
+      # Assign the role seller if it is the first time a user has listed a product
+      current_user.add_role :seller if !current_user.has_role? :seller
       redirect_to @product, notice: 'Product was successfully created.'
     else
       render :new
