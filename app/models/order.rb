@@ -6,9 +6,7 @@ class Order < ApplicationRecord
 
   def order_total
     sum = 0
-    self.line_items.each { |item|
-      sum += item.total
-    }
+    self.line_items.each { |item| sum += item.total }
     return sum
   end
 end
