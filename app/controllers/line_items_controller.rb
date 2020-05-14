@@ -2,7 +2,7 @@ class LineItemsController < ApplicationController
   before_action :authenticate_user!
   before_action :current_order
   before_action :set_line_item, only: [:add, :subtract, :destroy]
-  before_action :owns_line_item, only: [:add, :subtract, :destroy]
+  before_action :authorise_user, only: [:add, :subtract, :destroy]
 
     def create
         chosen_product = Product.find(params[:product_id])
@@ -63,7 +63,7 @@ class LineItemsController < ApplicationController
         end
 
         # Redirects user if they try to edit a line_item they don't own
-        def owns_line_item
+        def authorise_user
           if !(current_user.line_items.include? @line_item or current_user.has_role? :admin)
             redirect_to products_path, notice: "User not authorised"
           end

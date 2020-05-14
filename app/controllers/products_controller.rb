@@ -11,6 +11,15 @@ class ProductsController < ApplicationController
       case params[:show]
       when "my_products"
         @products = Product.where(user_id: current_user.id)
+      when "cardio"
+        @category = Category.find_by name: "Cardio"
+        set_products
+      when "machines"
+        @category = Category.find_by name: "Machines"
+        set_products
+      when "free"
+        @category = Category.find_by name: "Free Weights"
+        set_products
       end
     else
       @products = Product.all
@@ -65,6 +74,10 @@ class ProductsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product = Product.find(params[:id])
+    end
+
+    def set_products
+      @products = Product.where(category_id: @category.id)
     end
 
     def set_categories
