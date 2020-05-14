@@ -1,6 +1,8 @@
 class LineItemsController < ApplicationController
   before_action :authenticate_user!
   before_action :current_order
+  before_action :set_line_item, only: [:add, :subtract, :destroy]
+  before_action :owns_line_item, only: [:add, :subtract, :destroy]
 
     def create
         chosen_product = Product.find(params[:product_id])
@@ -20,7 +22,7 @@ class LineItemsController < ApplicationController
       end
 
       def add
-        @line_item = LineItem.find(params[:id])
+        
         if @line_item.product.quantity > @line_item.quantity
           @line_item.quantity += 1
           @line_item.save
@@ -48,11 +50,22 @@ class LineItemsController < ApplicationController
       end
       
       private
+        def set_line_item
+          @line_item = LineItem.find(params[:id])
+        end
+
         def current_order
             if current_user.orders.where(paid: false) == []
                 @current_order = Order.create(user_id: current_user.id)
             else
                 @current_order = current_user.orders.last
             end
+        end
+
+        # Redirects user if they try to edit a line_item they don't own
+        def owns_line_item
+          if !(current_user.line_items.include? @line_item or current_user.has_role? :admin)
+            redirect_to products_path, notice: "User not authorised"
+          end
         end
 end

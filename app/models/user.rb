@@ -11,4 +11,14 @@ class User < ApplicationRecord
   def user_name
     self.email.split("@")[0].capitalize
   end
+
+  def line_items
+    items = []
+    self.orders.each { |order|
+        order.line_items.each { |item|
+            items << item
+        }
+    }
+    return items
+  end
 end
