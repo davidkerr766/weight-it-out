@@ -48,10 +48,6 @@ class LineItemsController < ApplicationController
       end
       
       private
-        def line_item_params
-          params.require(:line_item).permit(:quantity,:product_id)
-        end
-
         def current_order
             if current_user.orders.where(paid: false) == []
                 @current_order = Order.create(user_id: current_user.id)

@@ -11,7 +11,7 @@
 
   <body>
     <nav>
-      <%= link_to "Products", root_path %>
+      <%= link_to "Products", products_path %>
       <% if user_signed_in? %>
         <%= link_to "Sales", products_sales_path if current_user.has_role? :seller %>
         <% if current_user.orders.last != nil %>

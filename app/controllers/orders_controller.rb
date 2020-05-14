@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
+  before_action :authorise_user, except: [:index, :checkout, :show]
   before_action :set_order, only: [:show, :edit, :update, :destroy, :checkout]
 
   def index
@@ -87,5 +88,9 @@ class OrdersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def order_params
       params.require(:order).permit(:paid)
+    end
+
+    def authorise_user
+      redirect_to orders_path, notice: "User not authorised" if !current_user.has_role? :admin
     end
 end
