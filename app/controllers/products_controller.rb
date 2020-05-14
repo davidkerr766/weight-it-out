@@ -1,7 +1,9 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :authorise_user, except: [:index, :show]
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   before_action :set_categories, only: [:new, :edit]
+  before_action :owns_product, only: [:edit, :update, :destroy]
 
   def index
     if params[:show].present?
@@ -72,5 +74,15 @@ class ProductsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def product_params
       params.require(:product).permit(:product_name, :description, :price, :quantity, :category_id)
+    end
+
+    def authorise_user
+      redirect_to products_path, notice: "User not authorised" if !(current_user.has_role? :admin or current_user.has_role? :seller)
+    end
+
+    def owns_product
+      if !(current_user.products.include? @product or current_user.has_role? :admin)
+        redirect_to products_path, notice: "User not authorised"
+      end
     end
 end
