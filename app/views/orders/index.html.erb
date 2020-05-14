@@ -1,27 +1,36 @@
 <h1>Orders</h1>
 
+<% @orders.each do |order| %>
 <table>
   <thead>
     <tr>
-      <th>Paid</th>
-      <th>User</th>
-      <th colspan="3"></th>
+      <th>Product</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Total</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @orders.each do |order| %>
+    <% order.line_items.each do |item| %>
       <tr>
-        <td><%= order.paid %></td>
-        <td><%= order.user_id %></td>
-        <td><%= link_to 'Show', order %></td>
-        <td><%= link_to 'Edit', edit_order_path(order) %></td>
-        <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= item.product.product_name %></td>
+        <td><%= number_to_currency(item.product.price) %></td>
+        <td><%= item.quantity %></td>
+        <td><%= number_to_currency(item.total) %></td>
       </tr>
     <% end %>
+      <tr>
+      <td><strong>Total Purchace</strong></td>
+      <td></td>
+      <td></td>
+      <td><strong><%= number_to_currency(order.order_total) %></strong></td>
+      </tr>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Order', new_order_path %>
+<% if current_user.has_role? :admin %>
+  <%= link_to "Edit", edit_order_path(order) %>
+  <%= link_to "Delete", order_path(order), method: :delete %>
+<% end %>
+<br> <br>
+<% end %>

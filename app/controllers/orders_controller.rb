@@ -1,9 +1,14 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_order, only: [:show, :edit, :update, :destroy, :purchase]
+  before_action :set_order, only: [:show, :edit, :update, :destroy, :checkout]
 
   def index
-    @orders = Order.all
+    if params[:show].present?
+      @orders = current_user.orders.where(paid: true)
+    else
+      @orders = (current_user.has_role? :admin) ? Order.all : current_user.orders
+    end
+
     if params[:key].present?
       if params[:key] == session[:key]
         cart = current_user.orders.last
@@ -21,11 +26,6 @@ class OrdersController < ApplicationController
   end
 
   def show
-  end
-
-  # GET /orders/new
-  def new
-    @order = Order.new
   end
 
   # GET /orders/1/edit
@@ -58,7 +58,7 @@ class OrdersController < ApplicationController
     redirect_to orders_url, notice: 'Order was successfully destroyed.'
   end
 
-  def purchase
+  def checkout
     key = ('a'..'z').to_a.shuffle[0..7].join
     session[:key] = key
     Stripe.api_key = "sk_test_kqxu11Y98Ngk3DYmWaDBZuvS000rTRt5dQ"

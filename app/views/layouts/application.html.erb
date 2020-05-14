@@ -16,6 +16,12 @@
         <% if current_user.orders.last != nil %>
           <%= link_to "My Cart", order_path(current_user.orders.last) if current_user.orders.last.paid == false %>
         <% end %>
+        <% if current_user.orders.where(paid: true) != [] %>
+          <%= link_to "Order History", orders_path(:show => "history") %>
+        <% end %>
+        <% if current_user.has_role? :admin %>
+          <%= link_to "All orders", orders_path %>
+        <% end %>
         Welcome: <%= current_user.user_name %>
         <%= link_to "My products", products_path(:show => "my_products") if current_user.has_role? :seller %>
         <%= link_to "Sign out", destroy_user_session_path, method: :delete %>

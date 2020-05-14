@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  resources :orders
-  get "orders/:id/purchase" => "orders#purchase", as: "purchase_order"
+  resources :orders, except: :new
+  get "orders/:id/purchase" => "orders#checkout", as: "checkout_order"
   root "products#index"
   resources :products
   devise_for :users
