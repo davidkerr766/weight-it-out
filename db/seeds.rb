@@ -16,10 +16,14 @@ Category.create!([
 
 User.destroy_all
 
-admin = User.create(email: "admin@test.com", password: "123456")
+admin = User.create(email: "admin@admin.com", password: "123456")
 admin.add_role :admin
 
 User.create!([
-    {email: "seller@test.com", password: "123456"},
-    {email: "renter@test.com", password: "123456"}
+    {email: "jets@test.com", password: "123456"},
+    {email: "anytime@test.com", password: "123456"},
+    {email: "golds@test.com", password: "123456"},
+    {email: "renter@test.com", password: "123456"},
+    {email: "rocky@test.com", password: "123456"},
+    {email: "arnie@test.com", password: "123456"}
 ])

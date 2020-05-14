@@ -15,6 +15,14 @@ class ProductsController < ApplicationController
     end
   end
 
+  def sales
+    @products = Product.where(user_id: current_user.id)
+    @revenue = 0
+    @products.each { |product|
+        @revenue += product.total_rented * product.price
+    }
+  end
+
   def show
   end
 

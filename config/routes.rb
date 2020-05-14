@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   resources :orders, except: :new
-  get "orders/:id/purchase" => "orders#checkout", as: "checkout_order"
+  get "orders/:id/checkout" => "orders#checkout", as: "checkout_order"
   root "products#index"
+  get "products/sales" => "products#sales"
   resources :products
   devise_for :users
 
