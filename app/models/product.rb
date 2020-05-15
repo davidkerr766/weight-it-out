@@ -7,6 +7,12 @@ class Product < ApplicationRecord
 
   has_one_attached :picture
 
+  validates :product_name, presence: true, format: { with: /[a-z\d]/i, message: "only allows letters and numbers" }, length: { maximum: 50 }
+  validates :description, presence: true, format: { with: /[a-z\d]/i, message: "only allows letters and numbers" }, length: { maximum: 200 }
+  validates :price, presence: true, numericality: { greater_than: 4.99}
+  validates :quantity, presence: true, numericality: { only_integer: true , greater_than: 0}
+  validates :picture, presence: true
+
   def total_rented
     count = 0
     paid = self.orders.where(paid: true).map { |order|  order.id }

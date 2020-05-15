@@ -53,6 +53,7 @@ class ProductsController < ApplicationController
       current_user.add_role :seller if !current_user.has_role? :seller
       redirect_to @product, notice: 'Product was successfully created.'
     else
+      set_categories
       render :new
     end
   end
