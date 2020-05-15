@@ -3,7 +3,7 @@
 <script src="https://js.stripe.com/v3/"></script>
 <script>
 function redirectToStripe() {
-    var stripe = Stripe("pk_test_TfIFrR35H3xSeBwy3ESbha7800z6BESRkn");
+    var stripe = Stripe("<%= Rails.application.credentials.dig(:stripe, :publishable_key) %>");
     stripe.redirectToCheckout({
         sessionId: '<%= @session.id %>'
     }).then(function (result) {

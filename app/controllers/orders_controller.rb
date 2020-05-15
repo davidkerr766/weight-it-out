@@ -62,7 +62,7 @@ class OrdersController < ApplicationController
   def checkout
     key = ('a'..'z').to_a.shuffle[0..7].join
     session[:key] = key
-    Stripe.api_key = "sk_test_kqxu11Y98Ngk3DYmWaDBZuvS000rTRt5dQ"
+    Stripe.api_key = Rails.application.credentials.dig(:stripe, :secret_key)
     @session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],
       line_items: @order.line_items.map { |item|
