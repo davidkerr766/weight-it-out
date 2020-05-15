@@ -11,7 +11,7 @@ class Product < ApplicationRecord
   validates :description, presence: true, format: { with: /[a-z\d]/i, message: "only allows letters and numbers" }, length: { maximum: 200 }
   validates :price, presence: true, numericality: { greater_than: 4.99}
   validates :quantity, presence: true, numericality: { only_integer: true , greater_than: 0}
-  validates :picture, presence: true
+  validates :picture, presence: true, blob: { content_type: ['image/png', 'image/jpg', 'image/jpeg'], size_range: 0..2.megabytes }
 
   def total_rented
     count = 0
