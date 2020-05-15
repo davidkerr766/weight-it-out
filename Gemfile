@@ -58,3 +58,5 @@ gem "devise", "~> 4.7"
 gem "stripe", "~> 5.22"
 
 gem "rolify", "~> 5.2"
+
+gem "aws-sdk-s3", "~> 1.64"

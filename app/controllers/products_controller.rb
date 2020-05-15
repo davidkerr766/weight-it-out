@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :authorise_user, except: [:index, :show]
+  before_action :authorise_user, only: [:sales, :update, :edit, :destroy]
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   before_action :set_categories, only: [:new, :edit]
   before_action :owns_product, only: [:edit, :update, :destroy]
