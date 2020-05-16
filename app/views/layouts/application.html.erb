@@ -10,25 +10,31 @@
   </head>
 
   <body>
-    <nav>
-      <%= link_to "Products", products_path %>
+    <nav class="ui menu">
+      <%= link_to "Products", products_path, class: "item" %>
       <% if user_signed_in? %>
-        <%= link_to "Sales", products_sales_path if current_user.has_role? :seller %>
+        <%= link_to "Sales", products_sales_path, class: "item" if current_user.has_role? :seller %>
         <% if current_user.orders.last != nil %>
-          <%= link_to "My Cart", order_path(current_user.orders.last) if current_user.orders.last.paid == false %>
+          <%= link_to "My Cart", order_path(current_user.orders.last), class: "item" if current_user.orders.last.paid == false %>
         <% end %>
         <% if current_user.orders.where(paid: true) != [] %>
-          <%= link_to "Order History", orders_path(:show => "history") %>
+          <%= link_to "Order History", orders_path(:show => "history"), class: "item" %>
         <% end %>
         <% if current_user.has_role? :admin %>
-          <%= link_to "All orders", orders_path %>
+          <%= link_to "All orders", orders_path, class: "item" %>
         <% end %>
-        Welcome: <%= current_user.user_name %>
-        <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+      <div class="right menu">
+        <div class="item" >
+          Welcome: <%= current_user.user_name %>
+        </div>
+        <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "item" %>
       <% else%>
-        <%= link_to "Sign in", new_user_session_path %>
-        <%= link_to "Sign up", new_user_registration_path %>
+        <div class="right menu">
+          <%= link_to "Sign in", new_user_session_path, class: "item" %>
+          <%= link_to "Sign up", new_user_registration_path, class: "item" %>
+        </div>
       <% end %>
+      </div>
     </nav>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
