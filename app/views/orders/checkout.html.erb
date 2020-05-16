@@ -1,4 +1,36 @@
-<button id="pay-now">Confirm Purchase</button>
+<h1>Checkout</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @order.line_items.each do |item| %>
+      <tr>
+        <td><%= item.product.product_name %></td>
+        <td><%= number_to_currency(item.product.price) %></td>
+        <td><%= item.quantity %></td>
+        <td><%= number_to_currency(item.total) %></td>
+      </tr>
+    <% end %>
+      <tr>
+      <td><strong>Total Purchace</strong></td>
+      <td></td>
+      <td></td>
+      <td><strong><%= number_to_currency(@order.order_total) %></strong></td>
+      </tr>
+  </tbody>
+</table>
+<%= link_to "back to cart", order_path(@order) %>
+<br>
+
+<button id="pay-now">Pay with stripe</button>
 
 <script src="https://js.stripe.com/v3/"></script>
 <script>
