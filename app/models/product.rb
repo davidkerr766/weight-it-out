@@ -7,8 +7,8 @@ class Product < ApplicationRecord
 
   has_one_attached :picture
 
-  validates :product_name, presence: true, format: { with: /[a-z\d]/i, message: "only allows letters and numbers" }, length: { maximum: 50 }
-  validates :description, presence: true, format: { with: /[a-z\d]/i, message: "only allows letters and numbers" }, length: { maximum: 200 }
+  validates :product_name, presence: true, format: { with: /[\w ]/, message: "only allows letters and numbers" }, length: { maximum: 50 }
+  validates :description, presence: true, format: { with: /[\w ]/, message: "only allows letters and numbers" }, length: { maximum: 200 }
   validates :price, presence: true, numericality: { greater_than: 4.99}
   validates :quantity, presence: true, numericality: { only_integer: true , greater_than: 0}
   validates :picture, presence: true, blob: { content_type: ['image/png', 'image/jpg', 'image/jpeg'], size_range: 0..2.megabytes }
