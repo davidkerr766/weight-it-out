@@ -1,6 +1,6 @@
-<h1>Weight It Out</h1>
-<h3>Products Available to Rent</h3>
-<%= link_to 'List gym equipment to rent', new_product_path if user_signed_in? %>
+
+<h2>Products Available to Rent</h2>
+<%= button_to 'List New Product', new_product_path, method: :get, class: "ui button large" if user_signed_in? %>
 <br>
 <div>
   <p>
@@ -13,25 +13,31 @@
 <div class="ui cards">
   <% @products.each do |product| %>
     <div class="card">
-      <%= image_tag product.picture, width: 200, class: "image" if product.picture.attached? %>
+      <%= image_tag product.picture, Width: "100%", class: "image" if product.picture.attached? %>
       <div class="content">
         <div class="header">
-          <p><strong>Product: </strong><%= product.product_name %></p>
+          <%= product.product_name %>
         </div>
         <div class="meta">
-          <p><strong>Category: </strong><%= product.category.name %></p>
+          <p><%= product.category.name %></p>
         </div>
         <div class="description">
-        <p><strong>Description: </strong><%= product.description %></p>
-        <p><strong>Price per month: </strong><%= number_to_currency(product.price) %></p>
-        <p><strong>Available: </strong><%= product.quantity %></p>
-        <p><strong>Provided By: </strong><%= product.user.user_name %></p>
+        <p><%= product.description %></p>
+        <span><strong><%= number_to_currency(product.price) %></strong>/month</span> <br>
+        <span><strong>Available: </strong><%= product.quantity %></span> <br>
+        <span><strong>Provided By: </strong><%= product.user.user_name %></span>
+        </div>
+        <div class="extra content">
+        <span>
+        <%= link_to "Details", product_path(product) %>
         <% if user_signed_in? && (current_user.has_role? :admin or current_user.products.include?(product)) %>
           <%= link_to 'Edit', edit_product_path(product) %>
           <%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %>
         <% end %>
-        <%= link_to "Details", product_path(product) %>
-        <%= link_to "Rent Now", line_items_path(:product_id => product.id), method: :post %>
+        </span> <br> <br>
+        <span>
+        <%= button_to "Rent Now", line_items_path(:product_id => product.id), class: "ui button" %>
+        </span>
         </div>
       </div>
     </div>
