@@ -10,11 +10,18 @@
     <%= link_to "Free Weights", products_path(:show => "free") %>
   </p>
 </div>
-    <% @products.each do |product| %>
-      <div>
-        <%= image_tag product.picture, width: 200 if product.picture.attached? %>
-        <p><strong>Product: </strong><%= product.product_name %></p>
-        <p><strong>Category: </strong><%= product.category.name %></p>
+<div class="ui cards">
+  <% @products.each do |product| %>
+    <div class="card">
+      <%= image_tag product.picture, width: 200, class: "image" if product.picture.attached? %>
+      <div class="content">
+        <div class="header">
+          <p><strong>Product: </strong><%= product.product_name %></p>
+        </div>
+        <div class="meta">
+          <p><strong>Category: </strong><%= product.category.name %></p>
+        </div>
+        <div class="description">
         <p><strong>Description: </strong><%= product.description %></p>
         <p><strong>Price per month: </strong><%= number_to_currency(product.price) %></p>
         <p><strong>Available: </strong><%= product.quantity %></p>
@@ -25,9 +32,11 @@
         <% end %>
         <%= link_to "Details", product_path(product) %>
         <%= link_to "Rent Now", line_items_path(:product_id => product.id), method: :post %>
-        <br><br>
+        </div>
       </div>
-    <% end %>
+    </div>
+  <% end %>
+</div>
 
 
 

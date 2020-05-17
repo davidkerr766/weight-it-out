@@ -10,6 +10,7 @@
   </head>
 
   <body>
+    <div class="ui container">
     <nav class="ui menu">
       <%= link_to "Products", products_path, class: "item" %>
       <% if user_signed_in? %>
@@ -38,6 +39,9 @@
     </nav>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+    <div class="ui container">
     <%= yield %>
+    </div>
+    </div>
   </body>
 </html>
