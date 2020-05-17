@@ -2,13 +2,11 @@
 <h2>Products Available to Rent</h2>
 <%= button_to 'List New Product', new_product_path, method: :get, class: "ui button large" if user_signed_in? %>
 <br>
-<div>
-  <p>
-    <strong>Search By: </strong>
-    <%= link_to "Cardio", products_path(:show => "cardio") %>
-    <%= link_to "Machines", products_path(:show => "machines") %>
-    <%= link_to "Free Weights", products_path(:show => "free") %>
-  </p>
+<div class="ui menu" id="search">
+    <%= link_to "All", products_path, class: "item" %>
+    <%= link_to "Cardio", products_path(:show => "cardio"), class: "item" %>
+    <%= link_to "Machines", products_path(:show => "machines"), class: "item" %>
+    <%= link_to "Free Weights", products_path(:show => "free"), class: "item" %>
 </div>
 <div class="ui cards">
   <% @products.each do |product| %>
