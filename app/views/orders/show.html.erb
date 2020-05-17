@@ -1,12 +1,12 @@
 <h1>Cart</h1>
 
-<table>
+<table class="ui table">
   <thead>
     <tr>
       <th>Product</th>
       <th>Price</th>
       <th>Quantity</th>
-      <th>Total</th>
+      <th colspan=4 >Total</th>
     </tr>
   </thead>
 
@@ -23,15 +23,11 @@
       </tr>
     <% end %>
       <tr>
-      <td><strong>Total Purchace</strong></td>
-      <td></td>
-      <td></td>
-      <td><strong><%= number_to_currency(@order.order_total) %></strong></td>
+      <td colspan=3><strong>Total Purchace</strong></td>
+      <td colspan=4><strong><%= number_to_currency(@order.order_total) %></strong></td>
       </tr>
   </tbody>
 </table>
-<%= link_to "Checkout", checkout_order_path(@order) %>
-<%= link_to "Keep shopping", root_path %>
-
-<%= link_to 'Edit', edit_order_path(@order) %> |
+<%= button_to "Checkout", checkout_order_path(@order), method: :get, class: "ui button" %>
+<%= button_to "Keep shopping", root_path, method: :get, class: "ui button" %>|
 <%= link_to 'Back', orders_path %>
