@@ -8,6 +8,7 @@ class ProductsController < ApplicationController
   def index
     if params[:show].present?
       case params[:show]
+      # Finds all the products of the specified category when the user navigates from the category selection on prodicts index
       when "cardio"
         @category = Category.find_by name: "Cardio"
         set_products
@@ -18,9 +19,11 @@ class ProductsController < ApplicationController
         @category = Category.find_by name: "Free Weights"
         set_products
       else
+        # Finds products that match the string from the search box using a custom db query from pg_search
         @products = Product.search_by_product_name params[:show]
       end
     else
+      # If no filtering or search selected, all products are provided
       @products = Product.all
     end
   end
@@ -82,20 +85,21 @@ class ProductsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+    # Finds the product by the id sent through params
     def set_product
       @product = Product.find(params[:id])
     end
 
+    # Selects all the products with matching category chosen by the user through the product filter
     def set_products
       @products = Product.where(category_id: @category.id)
     end
 
+    # Selects all the categories to populate the category selection in the form for products
     def set_categories
       @categories = Category.all
     end
 
-    # Only allow a list of trusted parameters through.
     def product_params
       params.require(:product).permit(:product_name, :description, :price, :quantity, :category_id, :picture)
     end
@@ -104,6 +108,8 @@ class ProductsController < ApplicationController
       redirect_to products_path, notice: "User not authorised" if !(@admin or @seller)
     end
 
+    # Finds all the products the user owns and compares it to the product the user is trying to edit or destroy
+    # If the user doesn't own the product or is not an admin they can't edit or destroy the product
     def owns_product
       if !(current_user.products.include? @product or @admin)
         redirect_to products_path, notice: "User not authorised"
