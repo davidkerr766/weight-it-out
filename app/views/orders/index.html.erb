@@ -38,9 +38,11 @@
       </tr>
   </tbody>
 </table>
-<h5>Purchase Date: <%= order.updated_at.asctime %></h5>
+<span class="ui floating"><strong>Purchase Date:</strong> <%= order.updated_at.asctime %></span>
 <% if current_user.has_role? :admin %>
-  <h5>Purchased by: <%= order.user.email if current_user.has_role? :admin %></h5>
+  <br>
+  <span class="ui floating"><strong>Purchased by:</strong> <%= order.user.email if current_user.has_role? :admin %></span>
+  <br>
   <%= link_to "Edit", edit_order_path(order) %>
   <%= link_to "Delete", order_path(order), method: :delete %>
 <% end %>
