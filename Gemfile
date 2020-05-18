@@ -64,3 +64,5 @@ gem "aws-sdk-s3", "~> 1.64"
 gem "activestorage-validator", "~> 0.1.3"
 
 gem "semantic-ui-sass", "~> 2.4"
+
+gem "chartkick", "~> 3.3"

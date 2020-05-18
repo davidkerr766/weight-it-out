@@ -21,4 +21,8 @@ class Product < ApplicationRecord
     }
     return count
   end
+
+  def revenue
+    self.total_rented * self.price
+  end
 end

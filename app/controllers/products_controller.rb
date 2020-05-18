@@ -27,10 +27,21 @@ class ProductsController < ApplicationController
   end
 
   def sales
+    # All the products that the user owns
     @products = Product.where(user_id: current_user.id)
+    # Total revenue from all sales
     @revenue = 0
     @products.each { |product|
-        @revenue += product.total_rented * product.price
+        @revenue += product.revenue
+    }
+    # Total revenue per category to provide data to graph
+    @sales_category = {}
+    @products.each { |product|
+      if @sales_category[product.category.name]
+        @sales_category[product.category.name] += product.revenue
+      else
+        @sales_category[product.category.name] = product.revenue
+      end
     }
   end
 
