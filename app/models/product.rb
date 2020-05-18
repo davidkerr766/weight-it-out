@@ -16,9 +16,12 @@ class Product < ApplicationRecord
   validates :quantity, presence: true, numericality: { only_integer: true , greater_than: 0}
   validates :picture, presence: true, blob: { content_type: ['image/png', 'image/jpg', 'image/jpeg'], size_range: 0..2.megabytes }
 
+  
   def total_rented
     count = 0
+    # An array of all the order_ids of orders that include the product and have been paid
     paid = self.orders.where(paid: true).map { |order|  order.id }
+    # If the lineitem belongs to an order that has been paid the quantity is added to the total_rented count
     self.line_items.each { |line|
         count += line.quantity if paid.include? line.order_id
     }

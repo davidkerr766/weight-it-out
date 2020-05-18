@@ -12,6 +12,7 @@ class User < ApplicationRecord
     self.email.split("@")[0].capitalize
   end
 
+  # The lineitems that belong to the user through orders in an array of lineitem objects
   def line_items
     items = []
     self.orders.each { |order|
