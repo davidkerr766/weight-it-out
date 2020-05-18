@@ -1,4 +1,7 @@
 class Product < ApplicationRecord
+  include PgSearch::Model
+  pg_search_scope :search_by_product_name, against: :product_name
+
   belongs_to :category
   belongs_to :user
 

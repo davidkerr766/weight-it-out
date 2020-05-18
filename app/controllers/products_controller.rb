@@ -7,10 +7,7 @@ class ProductsController < ApplicationController
 
   def index
     if params[:show].present?
-      puts "It worked"
       case params[:show]
-      when "my_products"
-        @products = Product.where(user_id: current_user.id)
       when "cardio"
         @category = Category.find_by name: "Cardio"
         set_products
@@ -20,6 +17,8 @@ class ProductsController < ApplicationController
       when "free"
         @category = Category.find_by name: "Free Weights"
         set_products
+      else
+        @products = Product.search_by_product_name params[:show]
       end
     else
       @products = Product.all

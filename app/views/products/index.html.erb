@@ -5,6 +5,12 @@
     <%= link_to "Cardio", products_path(:show => "cardio"), class: "item" %>
     <%= link_to "Machines", products_path(:show => "machines"), class: "item" %>
     <%= link_to "Free Weights", products_path(:show => "free"), class: "item" %>
+    <div class="right menu">
+      <form method="get" class="ui action input" action="<%= products_path %>">
+        <input type="text" placeholder="Search.." name="show" >
+        <button type="submit" class="ui button"><i class="search icon"></i></button>
+      </form>
+    </div>
 </div>
 <%= button_to 'List New Product', new_product_path, method: :get, class: "ui button large" if user_signed_in? %>
 <br>
