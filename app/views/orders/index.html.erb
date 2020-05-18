@@ -9,7 +9,7 @@
       <th>Price</th>
       <th>Quantity</th>
       <th>Total</th>
-      <% if current_user.has_role? :admin %>
+      <% if @admin %>
         <th>Seller</th>
       <% end %>
     </tr>
@@ -23,7 +23,7 @@
         <td><%= number_to_currency(item.product.price) %></td>
         <td><%= item.quantity %></td>
         <td><%= number_to_currency(item.total) %></td>
-        <% if current_user.has_role? :admin %>
+        <% if @admin %>
           <td><%= item.product.user.user_name %></td>
         <% end %>
       </tr>
@@ -32,16 +32,18 @@
       <td colspan=3></td>
       <td><strong>Total Purchace:</strong></td>
       <td><strong><%= number_to_currency(order.order_total) %></strong></td>
-      <% if current_user.has_role? :admin %>
+      <% if @admin %>
         <td></td>
       <% end %>
       </tr>
   </tbody>
 </table>
 <span class="ui floating"><strong>Purchase Date:</strong> <%= order.updated_at.asctime %></span>
-<% if current_user.has_role? :admin %>
+<% if @admin %>
   <br>
-  <span class="ui floating"><strong>Purchased by:</strong> <%= order.user.email if current_user.has_role? :admin %></span>
+  <span class="ui floating"><strong>Purchased by:</strong> <%= order.user.email %></span>
+  <br>
+  <span class="ui floating"><strong>Paid:</strong> <%= order.paid %></span>
   <br>
   <%= link_to "Edit", edit_order_path(order) %>
   <%= link_to "Delete", order_path(order), method: :delete %>

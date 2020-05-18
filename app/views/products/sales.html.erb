@@ -1,5 +1,8 @@
 <h1>Sales</h1>
-<h3>Total Revenue <%= number_to_currency(@revenue) %></h2>
+<div class="ui statistic">
+<div class="value"><%= number_to_currency(@revenue) %></div>
+<div class="label">Total Revenue</div>
+</div>
 <table class="ui table">
   <thead>
     <tr>

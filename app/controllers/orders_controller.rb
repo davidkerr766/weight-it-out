@@ -5,9 +5,9 @@ class OrdersController < ApplicationController
 
   def index
     if params[:show].present?
-      @orders = current_user.orders.where(paid: true)
+      @orders = current_user.orders.where(paid: true).order(updated_at: :desc)
     else
-      @orders = @admin ? Order.all : current_user.orders
+      @orders = (@admin ? Order.all : current_user.orders).order(updated_at: :desc)
     end
 
     if params[:key].present?
