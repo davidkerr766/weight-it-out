@@ -4,23 +4,31 @@ class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy, :checkout]
 
   def index
+    # If the request is from the "order history" link only paid orders are loaded from db
+    # Only admin can see all orders otherwise a user can only see their orders
     if params[:show].present?
       @orders = current_user.orders.where(paid: true).order(updated_at: :desc)
     else
       @orders = (@admin ? Order.all : current_user.orders).order(updated_at: :desc)
     end
 
+    # If a user has been redirected to orders index from stripe the query parameter must match the string saved in the session hash
+    # to confirm a successful payment has been made and to prevent fraudulent query parameters provided by a malicious party
+    # from validating a sale.
     if params[:key].present?
       if params[:key] == session[:key]
         cart = current_user.orders.last
         cart.paid = true
         cart.save
+        # On successful payment the number of items are subtracted from the quantity of the relevant product
         cart.line_items.each { |line|
           product = line.product
           product.quantity -= line.quantity
           product.save 
         }
         flash[:notice] = "Payment Successful"
+      else
+        flash[:notice] = "Payment unsuccessful"
       end
       session.delete(:key)
     end
@@ -29,23 +37,9 @@ class OrdersController < ApplicationController
   def show
   end
 
-  # GET /orders/1/edit
   def edit
   end
 
-  def create
-    @order = Order.new(order_params)
-    @order.user_id = current_user.id
-
-    if @order.save
-      redirect_to @order, notice: 'Order was successfully created.'
-    else
-      render :new
-    end
-  end
-
-  # PATCH/PUT /orders/1
-  # PATCH/PUT /orders/1.json
   def update
     if @order.update(order_params)
       redirect_to @order, notice: 'Order was successfully updated.'
@@ -60,6 +54,7 @@ class OrdersController < ApplicationController
   end
 
   def checkout
+    # Random string generated and saved to session hash to later compare to query param and validate payment
     key = ('a'..'z').to_a.shuffle[0..7].join
     session[:key] = key
     Stripe.api_key = Rails.application.credentials.dig(:stripe, :secret_key)
@@ -80,12 +75,11 @@ class OrdersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+    # Finds the order by the id sent through params
     def set_order
       @order = Order.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def order_params
       params.require(:order).permit(:paid)
     end

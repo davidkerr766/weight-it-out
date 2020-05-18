@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :orders, except: :new
+  resources :orders, except: [:new, :create]
   get "orders/:id/checkout" => "orders#checkout", as: "checkout_order"
   root "products#index"
   get "products/sales" => "products#sales"
