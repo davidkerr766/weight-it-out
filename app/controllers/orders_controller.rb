@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
     if params[:show].present?
       @orders = current_user.orders.where(paid: true)
     else
-      @orders = (current_user.has_role? :admin) ? Order.all : current_user.orders
+      @orders = @admin ? Order.all : current_user.orders
     end
 
     if params[:key].present?
@@ -91,6 +91,6 @@ class OrdersController < ApplicationController
     end
 
     def authorise_user
-      redirect_to orders_path, notice: "User not authorised" if !current_user.has_role? :admin
+      redirect_to orders_path, notice: "User not authorised" if !@admin
     end
 end

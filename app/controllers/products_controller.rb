@@ -50,7 +50,7 @@ class ProductsController < ApplicationController
 
     if @product.save
       # Assign the role seller if it is the first time a user has listed a product
-      current_user.add_role :seller if !current_user.has_role? :seller
+      current_user.add_role :seller if !@seller
       redirect_to @product, notice: 'Product was successfully created.'
     else
       set_categories
@@ -91,11 +91,11 @@ class ProductsController < ApplicationController
     end
 
     def authorise_user
-      redirect_to products_path, notice: "User not authorised" if !(current_user.has_role? :admin or current_user.has_role? :seller)
+      redirect_to products_path, notice: "User not authorised" if !(@admin or @seller)
     end
 
     def owns_product
-      if !(current_user.products.include? @product or current_user.has_role? :admin)
+      if !(current_user.products.include? @product or @admin)
         redirect_to products_path, notice: "User not authorised"
       end
     end

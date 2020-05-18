@@ -64,7 +64,7 @@ class LineItemsController < ApplicationController
 
         # Redirects user if they try to edit a line_item they don't own
         def authorise_user
-          if !(current_user.line_items.include? @line_item or current_user.has_role? :admin)
+          if !(current_user.line_items.include? @line_item or @admin)
             redirect_to products_path, notice: "User not authorised"
           end
         end
