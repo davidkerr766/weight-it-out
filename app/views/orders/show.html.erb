@@ -3,31 +3,43 @@
 <table class="ui table">
   <thead>
     <tr>
+      <th></th>
       <th>Product</th>
       <th>Price</th>
       <th>Quantity</th>
-      <th colspan=4 >Total</th>
+      <th colspan=2>Total</th>
     </tr>
   </thead>
 
   <tbody>
     <% @order.line_items.each do |item| %>
       <tr>
+        <td>
+          <%= image_tag item.product.picture, Width: 60 %>
+        </td>
         <td><%= item.product.product_name %></td>
         <td><%= number_to_currency(item.product.price) %></td>
         <td><%= item.quantity %></td>
         <td><%= number_to_currency(item.total) %></td>
-        <td><%= link_to "+1", line_item_add_path(item), method: :post %></td>
-        <td><%= link_to "-1", line_item_subtract_path(item), method: :post %></td>
-        <td><%= link_to "Delete", line_item_path(item), method: :delete, data: {confirm: "Are you sure?"} %></td>
+        <td>
+          <%= link_to line_item_add_path(item), method: :post do %>
+            <i class="arrow up icon"></i>
+          <% end %>
+          <%= link_to line_item_subtract_path(item), method: :post do %>
+            <i class="arrow down icon"></i>
+          <% end %>
+          <%= link_to line_item_path(item), method: :delete, data: {confirm: "Are you sure?"} do %>
+            <i class="remove icon"></i>
+          <% end %>
+        </td>
       </tr>
     <% end %>
       <tr>
-      <td colspan=3><strong>Total Purchace</strong></td>
-      <td colspan=4><strong><%= number_to_currency(@order.order_total) %></strong></td>
+      <td colspan=3></td>
+      <td><strong>Total Purchace:</strong></td>
+      <td colspan=2><strong><%= number_to_currency(@order.order_total) %></strong></td>
       </tr>
   </tbody>
 </table>
-<%= button_to "Checkout", checkout_order_path(@order), method: :get, class: "ui button" %>
-<%= button_to "Keep shopping", root_path, method: :get, class: "ui button" %>|
-<%= link_to 'Back', orders_path %>
+<%= button_to "Checkout", checkout_order_path(@order), method: :get, class: "ui button segment floated" %>
+<%= button_to "Keep shopping", products_path, method: :get, class: "ui button segment floated" %>
