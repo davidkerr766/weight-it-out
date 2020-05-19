@@ -46,6 +46,7 @@ The target audience for Weight It Out is:
 * HTML 5
 * SCSS with semantic-ui
 * Javascript
+* Git
 
 ## User Stories
 ![user stories](docs/user_stories.jpg)
@@ -77,7 +78,13 @@ Weight It Out is built using Ruby on Rails.  Ruby on Rails uses the Model-view-c
 
 The specific implementation of MVC in Rails and indeed in Weight It Out, follows a path of interactions between model, view and controller.  When HTTP requests are made, they are routed to specific controllers using RESTful URL’s.  Weight It Out has controllers for products, orders and lineitems.  The specific route will determine what action method is called in the controller.  For example, if the HTTP request is routed to the index of the products controller, the index action method will be called.  The controller can then communicate with either the model, view or both depending on what is required in the action.  In the index example, both the model and view are required.  The index action shows all the available products.  Rails uses the model, more specifically Activerecord, as an interface with the database.  The database is queried by the product model, with the model handling all query logic.  The model then provides the data back to the controller.  The user needs to see the data provided by the model so the controller passes the data as a variable to the view.  The rails view can then generate the necessary html and css ready to send back to the user’s browser using the data provided by the controller.  In the index example rails will send the index page displaying all the products. 
 
-## Third Party Services !!
+## Third Party Services
+#### AWS S3
+AWS s3 is used to store all product images.  AWS s3 is a cloud file storage solution that enables images to served by AWS servers and therefore free up resources on the rails server.  An Amazon AWS account was made and an Identity and Access Management (IAM) user was set up with permissions to add and delete files in a new s3 bucket.  Thy s3 bucket is specific for the application and can only be used with the IAM user credentials.  The IAM user credentials are stored in an encrypted file in the rails app to prevent unauthorised access to the s3 bucket.
+#### Stripe
+Stripe is used by the application to handle credit card payments.  By using Stripe, the app does not need to handle any credit card information or be PCI compliant.  A Stripe account was set up for the app with private and public keys generated.  The keys are stored in the app in an encrypted file.  The private key is only ever used server side to prevent it being exposed to the public.  Stripe provided a gem to use with rails.  With methods provided from the gem, a session object is generated in a rails controller.  The public key is in a rails view.  If the user decides to pay with stripe they are redirected to the Stripe website to handle the credit card payment.  Stripe verifies the payment request is authentic by matching the public key provided from the front end with the session object generated with the secret key server side.
+#### Heroku
+Heroku is used to deploy the rails application online.  Heroku is a cloud hosting service with wide support for Ruby on Rails apps.  Heroku also has an integrated Postgres database making it an ideal choice.  Heroku serves the rails app on a virtual instance of Linux they call a dyno.  The dyno has a virtualised operating system with all required software installed to run the rails app.  Heroku is compatible with git, functioning as a remote repository.  This allows the app to be pushed to Heroku through the CLI using git.  Heroku stores all data in its own Postgres database.  A master key is provided to Heroku as an environment variable to allow decryption of credentials in the app.
 
 ## Models Active Record Associations !!
 
