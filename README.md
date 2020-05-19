@@ -56,9 +56,12 @@ Products index for desktop
 Products index for tablet
 ![Products index for tablet](docs/products_tablet.jpg)
 Products index for mobile
+
 ![Products index for mobile](docs/products_mobile.jpg)
 New product for mobile
+
 ![New product for mobile](docs/new_product_mobile.jpg)
+
 Show product for tablet
 ![Show product for tablet](docs/show_product_tablet.jpg)
 Sales for Desktop
