@@ -46,7 +46,9 @@ The target audience for Weight It Out is:
 * SCSS
 * Javascript
 
-## User Stories !!
+## User Stories
+![user stories](docs/user_stories.jpg)
+
 [Trello](https://trello.com/b/bqyWmgto/weight-it-out)
 ## Wireframes !!
 
