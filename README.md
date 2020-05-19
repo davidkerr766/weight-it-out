@@ -25,8 +25,26 @@ The purpose of the Weight It Out two-way marketplace app is to solve the problem
 #### Screenshots
 
 #### Target Audience
-
+The target audience for Weight It Out is:
+* Anyone that owns gym equipment to rent.  Particularly gym owners
+* Anyone that needs gym equipment while gyms are closed
 #### Tech Stack
+* Ruby 2.5.1
+
+	Gems:
+	* devise
+	* stripe
+	* rolify
+	* aws-sdk-s3
+	* activestorage-validator
+	* semantic-ui-sass
+	* chartkick
+	* pg_search
+* Ruby on Rails 6.0.3
+* Postgres 12.3
+* HTML 5
+* SCSS
+* Javascript
 
 ## User Stories !!
 [Trello](https://trello.com/b/bqyWmgto/weight-it-out)
