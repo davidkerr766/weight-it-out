@@ -50,7 +50,19 @@ The target audience for Weight It Out is:
 ![user stories](docs/user_stories.jpg)
 
 [Trello](https://trello.com/b/bqyWmgto/weight-it-out)
-## Wireframes !!
+## Wireframes
+Products index for desktop
+![Products index for desktop](docs/products_desktop.jpg)
+Products index for tablet
+![Products index for tablet](docs/products_tablet.jpg)
+Products index for mobile
+![Products index for mobile](docs/products_mobile.jpg)
+New product for mobile
+![New product for mobile](docs/new_product_mobile.jpg)
+Show product for tablet
+![Show product for tablet](docs/show_product_tablet.jpg)
+Sales for Desktop
+![Sales for Desktop](docs/sales_desktop.jpg)
 
 ## ERD !!
 
