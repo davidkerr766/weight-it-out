@@ -55,8 +55,8 @@ Products index for desktop
 ![Products index for desktop](docs/products_desktop.jpg)
 Products index for tablet
 ![Products index for tablet](docs/products_tablet.jpg)
-Products index for mobile
 
+Products index for mobile
 ![Products index for mobile](docs/products_mobile.jpg)
 New product for mobile
 
