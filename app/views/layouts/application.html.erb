@@ -11,36 +11,34 @@
 
   <body>
     <div class="ui container" id="main">
-    <nav class="ui menu">
-      <%= link_to "Products", products_path, class: "item" %>
-      <% if user_signed_in? %>
-        <%= link_to "Sales", products_sales_path, class: "item" if @seller %>
-        <% if current_user.orders.last != nil %>
-          <%= link_to "My Cart", order_path(current_user.orders.last), class: "item" if current_user.orders.last.paid == false %>
+      <nav class="ui menu">
+        <%= link_to "Products", products_path, class: "item" %>
+        <% if user_signed_in? %>
+          <%= link_to "Sales", products_sales_path, class: "item" if @seller %>
+          <% if @cart[0] != nil %>
+            <%= link_to "My Cart (#{@cart_items})", order_path(@cart[-1]), class: "item" if @cart[-1].paid == false %>
+            <%= link_to "Order History", orders_path(:show => "history"), class: "item" if (@cart.length > 1 or @cart[-1].paid == true) %>
+          <% end %>
+          <% if @admin %>
+            <%= link_to "All orders", orders_path, class: "item" %>
+          <% end %>
+          <div class="right menu">
+            <div class="item" >
+              Welcome: <%= current_user.user_name %>
+            </div>
+            <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "item" %>
+        <% else%>
+          <div class="right menu">
+            <%= link_to "Sign in", new_user_session_path, class: "item" %>
+            <%= link_to "Sign up", new_user_registration_path, class: "item" %>
+          </div>
         <% end %>
-        <% if current_user.orders.where(paid: true) != [] %>
-          <%= link_to "Order History", orders_path(:show => "history"), class: "item" %>
-        <% end %>
-        <% if @admin %>
-          <%= link_to "All orders", orders_path, class: "item" %>
-        <% end %>
-      <div class="right menu">
-        <div class="item" >
-          Welcome: <%= current_user.user_name %>
-        </div>
-        <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "item" %>
-      <% else%>
-        <div class="right menu">
-          <%= link_to "Sign in", new_user_session_path, class: "item" %>
-          <%= link_to "Sign up", new_user_registration_path, class: "item" %>
-        </div>
-      <% end %>
       </div>
-    </nav>
+      </nav>
     <div class="ui container">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+      <p class="notice ui"><%= notice %></p>
+      <p class="alert ui"><%= alert %></p>
+      <%= yield %>
     </div>
     </div>
   </body>
