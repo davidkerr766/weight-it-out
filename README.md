@@ -244,5 +244,8 @@ ActiveRecord::Schema.define(version: 2020_05_14_224844) do
   add_foreign_key "products", "users"
 end
 ```
-## How Tasks were allocated and tracked !!
+## How Tasks were allocated and tracked
 [Trello](https://trello.com/b/bqyWmgto/weight-it-out)
+Tasks were planned and allocated using Trello.  The first part of the process was to make the user stories.  The User stories then determined what tasks would be necessary.  A column for tasks To Do, Doing and Done was made in Trello.  Then Tasks were allocated to satisfy the requirements of the user stories and the assessment criteria.  For each task the time required to complete was assessed and the task was allocated a colour coded rating.  Next the task was broken down into a checklist that could be ticked off after completion.  When a task was being worked on it was moved to the Doing column and finally moved to the Done column when finished.
+![trello board](docs/trello.jpg)
+![trello checklist](docs/checklist.jpg)
