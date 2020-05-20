@@ -20,17 +20,20 @@ class ProductsController < ApplicationController
         set_products
       else
         # Finds products that match the string from the search box using a custom db query from pg_search
-        @products = Product.search_by_product_name params[:show]
+        # Eager loads user and category to reduce db queries
+        @products = Product.includes(:user, :category).search_by_product_name params[:show]
       end
     else
       # If no filtering or search selected, all products are provided
-      @products = Product.all
+      # Eager loads user and category to reduce db queries
+      @products = Product.includes(:user, :category).all
     end
   end
 
   def sales
     # All the products that the user owns
-    @products = Product.where(user_id: current_user.id)
+    # Eager loads category to reduce db queries
+    @products = Product.includes(:category).where(user_id: current_user.id)
     # Total revenue from all sales
     @revenue = 0
     @products.each { |product|
@@ -91,8 +94,9 @@ class ProductsController < ApplicationController
     end
 
     # Selects all the products with matching category chosen by the user through the product filter
+    # Eager loads user and category to reduce db queries
     def set_products
-      @products = Product.where(category_id: @category.id)
+      @products = Product.includes(:user, :category).where(category_id: @category.id)
     end
 
     # Selects all the categories to populate the category selection in the form for products

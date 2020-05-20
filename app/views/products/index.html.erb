@@ -34,7 +34,7 @@
         <div class="extra content">
         <span>
           <%= link_to "Details", product_path(product) %>
-          <% if user_signed_in? && (current_user.has_role? :admin or current_user.products.include?(product)) %>
+          <% if user_signed_in? && (@admin or current_user.products.include?(product)) %>
             <%= link_to 'Edit', edit_product_path(product) %>
             <%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %>
           <% end %>
