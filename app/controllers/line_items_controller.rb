@@ -55,7 +55,7 @@ class LineItemsController < ApplicationController
         @current_order = Order.create(user_id: current_user.id)
       else
       # An unpaid order(cart) will always have the highest order_id as a new order wont't be initialised until all are paid
-        @current_order = current_user.orders.last
+        @current_order = @cart[-1]
       end
     end
 
