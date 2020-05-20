@@ -123,7 +123,25 @@ Weight it out has the following model relationships:
 
 **has_and_belongs_to_many**: Is another active record association to establish a many to many record.  However, with has_and_belongs_to_many active record with make it’s own join table without having to explicitly make a model for the join table.  In the app Role HABTM users and User HABTM roles (this relation is declared with rolify in the user model).
 
-## Database Relations !!
+## Database Relations
+#### User
+User is a parent table.  The Business rules for User state that a user can have none or many Roles through the UserRole join table.  A User can have none or many Orders.  A User can also have none or many Products.
+#### Category
+Category is a parent table and functions as a lookup table.  A Category can have none or many products.  Category was established to normalise the product table and remove repeated data that a field for category in products would provide.
+#### Role
+Role is a parent table.  A role has none or many Users through UserRoles.  In typical use of the app a role would only be created when assigned to a user making a Role usually have one or many Users.  However, A Role can be created independently in the rails console allowing a role to have no Users.
+#### UserRole
+UserRole is a child of Users and Roles acting as a join table to establish a many to many relationship between Users and Roles.  A UserRole can have one and only one Role.  A UserRole can have one and only one User.
+#### Order
+Order is a child of User.  An Order can have one and only one User.  An order can have none or many Products through LineItems.  Typically, an order will have one or many products through lineitems as in the application an order is only ever initialised when a product is added through lineitems.  However, within the app the user can delete all lineitems from an order allowing an order to have none or many products through lineitems.
+#### LineItem
+Line item is a child of Orders and Products and acts as a join table establishing a many to many relationship between Products and Orders.  A lineItem can have one and only one Order.  A lineitem can have one and only one Product.
+#### Product
+Product is a child of Category and User.  A Product has one and only one Category.  A Product has none or many Orders through the join table LineItems.  A product has one and only one User (the owner of the product who listed it for rent).  A Product has one and only one picture, stored as a blob in ActiveStorageBlob.
+#### ActiveStorageAttachment
+ActiveStorageAttachment is a child of Products and ActiveStorageBlog and would be acting as a join table if Products had many pictures.  However, it is a redundant table in the Weight It Out app.  When active storage is installed it creates the table to allow for the possibility of many files belonging to one model.  ActiveStorageAttachment has one and only one Product.  ActiveStorageAtachment has one and only one ActiveStorageBlog.
+#### ActiveStorageBlob
+ActiveStorageBlob is a parent table and has a one to one relationship to Products through ActiveStorageAttachment.  ActiveStorageBlob has one and only one ActiveStorageAttachment.  ActiveStorageBlob has one and only one Product through ActiveStorageAttachment.   A Product must have a picture is a business rule of the app.
 
 ## Database Schema
 ```
