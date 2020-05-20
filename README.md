@@ -73,7 +73,8 @@ Show product for tablet
 Sales for Desktop
 ![Sales for Desktop](docs/sales_desktop.jpg)
 
-## ERD !!
+## ERD
+![ER diagram](docs/weight-it-out.jpeg)
 
 ## High Level Components in App
 Weight It Out is built using Ruby on Rails.  Ruby on Rails uses the Model-view-controller (MVC) pattern to separate the concerns of a complex web framework.  The Model is concerned with data and associated logic, the View is everything shown to the user and the Controller acts like a brain, receiving commands from a user and then interacts with the model and Views to complete the commands.
