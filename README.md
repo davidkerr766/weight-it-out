@@ -91,7 +91,7 @@ Heroku is used to deploy the rails application online.  Heroku is a cloud hostin
 ## Models Active Record Associations
 Weight it out has the following model relationships:
 * Category
-* has_many :products, dependent: :destroy.  
+    * has_many :products, dependent: :destroy.  
 * LineItem
 	* belongs_to :product
   	* belongs_to :order
@@ -112,15 +112,15 @@ Weight it out has the following model relationships:
 	* has_many :orders, dependent: :destroy
 	* Rolify
 
-has_many: Establishes a has many relationship with the model given as an argument.  For example the category model has many products.  With this relationship in place active record allows a Category object to be queried for all the products it owns with a class method called “products”.  Products will return all the products that have a category_id (foreign key) that matches the id of the category object. The relationship must be established in both directions for active record to recognise it.  Therefore, product must “belongs_to” category to establish the relationship.
+**has_many**: Establishes a has many relationship with the model given as an argument.  For example the category model has many products.  With this relationship in place active record allows a Category object to be queried for all the products it owns with a class method called “products”.  Products will return all the products that have a category_id (foreign key) that matches the id of the category object. The relationship must be established in both directions for active record to recognise it.  Therefore, product must “belongs_to” category to establish the relationship.
 
-belongs_to:  Is the reciprocal of has_many and completes the active record association.  A model that belongs_to another will have a foreign key for a single model object in the parent model.  When a model, such as product in the app, belongs to another model it can only have one object of that model associated with it.  For example, a product has one category.  The belongs_to association also gives the model a class method to return the object of the model it belongs to.  Product.find(1).category will return the category object of the product with an id of 1.
+**belongs_to**:  Is the reciprocal of has_many and completes the active record association.  A model that belongs_to another will have a foreign key for a single model object in the parent model.  When a model, such as product in the app, belongs to another model it can only have one object of that model associated with it.  For example, a product has one category.  The belongs_to association also gives the model a class method to return the object of the model it belongs to.  Product.find(1).category will return the category object of the product with an id of 1.
 
-has_many :objects, through :model: Is the model association used to establish a many to many relationship through a join table in active record.  The join table will have two belongs_to relations, representing two foreign keys.  The join table is the model referred to with “through”.  For example in the app an Order has_many :products, through: :line_items.   A product also has_many :orders, through: :line_items.  With these model associations in place an active record many to many association is established between Orders and Products with line_items acting as a join table.
+**has_many :objects, through :model**: Is the model association used to establish a many to many relationship through a join table in active record.  The join table will have two belongs_to relations, representing two foreign keys.  The join table is the model referred to with “through”.  For example in the app an Order has_many :products, through: :line_items.   A product also has_many :orders, through: :line_items.  With these model associations in place an active record many to many association is established between Orders and Products with line_items acting as a join table.
 
-has_one_attached: Is the active storage equivalent of has_one in active record.  It establishes a has one and only one relationship with an active storage blob object.  Product has_one_attached :picture meaning one and only one picture(active storage blob) belongs to the product.
+**has_one_attached**: Is the active storage equivalent of has_one in active record.  It establishes a has one and only one relationship with an active storage blob object.  Product has_one_attached :picture meaning one and only one picture(active storage blob) belongs to the product.
 
-has_and_belongs_to_many : Is another active record association to establish a many to many record.  However, with has_and_belongs_to_many active record with make it’s own join table without having to explicitly make a model for the join table.  In the app Role HABTM users and User HABTM roles (this relation is declared with rolify in the user model).
+**has_and_belongs_to_many**: Is another active record association to establish a many to many record.  However, with has_and_belongs_to_many active record with make it’s own join table without having to explicitly make a model for the join table.  In the app Role HABTM users and User HABTM roles (this relation is declared with rolify in the user model).
 
 ## Database Relations !!
 
