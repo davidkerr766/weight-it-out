@@ -9,7 +9,8 @@ class OrdersController < ApplicationController
     if params[:show].present?
       @orders = current_user.orders.where(paid: true).order(updated_at: :desc)
     else
-      @orders = (@admin ? Order.all : current_user.orders).order(updated_at: :desc)
+      # When an admin looks at all orders line items and their nested product and product's nested user are eager loaded
+      @orders = (@admin ? Order.includes(line_items: [{product: :user}]).all : current_user.orders).order(updated_at: :desc)
     end
 
     # If a user has been redirected to orders index from stripe the query parameter must match the string saved in the session hash
