@@ -38,7 +38,7 @@
       </tr>
   </tbody>
 </table>
-<span class="ui floating"><strong>Purchase Date:</strong> <%= order.updated_at.asctime %></span>
+<span class="ui floating"><strong>Purchase Date:</strong> <%= order.updated_at.localtime.asctime %></span>
 <% if @admin %>
   <br>
   <span class="ui floating"><strong>Purchased by:</strong> <%= order.user.email %></span>
