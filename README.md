@@ -24,7 +24,9 @@ The purpose of the Weight It Out two-way marketplace app is to solve the problem
 #### Sitemap
 ![sitemap](docs/weight-it-out_sitemap.jpeg)
 #### Screenshots
-
+![products index](docs/products_index.jpg)
+![cart](docs/cart.jpg)
+![sales](docs/sales.jpg)
 #### Target Audience
 The target audience for Weight It Out is:
 * Anyone that owns gym equipment to rent.  Particularly gym owners.
