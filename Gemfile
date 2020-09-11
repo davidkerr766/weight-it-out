@@ -65,6 +65,6 @@ gem "activestorage-validator", "~> 0.1.3"
 
 gem "semantic-ui-sass", "~> 2.4"
 
-gem "chartkick", "~> 3.3"
+gem "chartkick", "~> 3.4"
 
 gem "pg_search", "~> 2.3"
